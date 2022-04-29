@@ -1,20 +1,24 @@
 import './App.css';
 import Card from './Card'
 import { faker } from '@faker-js/faker';
+import React, { useState } from 'react'
 
 function App() {
-  const buttonsMarkup = () => {
-    <div>
-      <button className="button button2">Yes</button>
-      <button className="button button3">No</button>
-    </div>
+
+  const [name, setName] = useState('Benjamin smith')
+  const [showCard, setShowCard] = useState(true)
+
+  const changeNameHandle = (name) => {
+    setName(name)
   }
+
+  const changeInputHandler = event => setName(event.target.value)
+  const toggleShowCard = () => setShowCard(!showCard)
 
   return (
     <div className="App">
-      <Card name={faker.name.firstName()} title={faker.name.jobTitle()} avatar={faker.image.avatar()}>{buttonsMarkup}</Card>
-      <Card name={faker.name.firstName()} title={faker.name.jobTitle()} avatar={faker.image.avatar()}>{buttonsMarkup}</Card>
-      <Card name={faker.name.firstName()} title={faker.name.jobTitle()} avatar={faker.image.avatar()}>{buttonsMarkup}</Card>
+      <button className="button button2" onClick={toggleShowCard}>toggle Show/Hide card</button>
+      {showCard ? <Card name={name} title={faker.name.jobTitle()} avatar={faker.image.avatar()} onChangeName={() => changeNameHandle('carrick')} onChangeInput={changeInputHandler}></Card> : null}
     </div>
   );
 }
